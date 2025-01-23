@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../Provider/AuthProvider';
+import axios from 'axios';
 
 const Login = () => {
-    const {login,googleSignIn}=useContext(AuthContext)
-    const navigate=useNavigate()
-    const location=useLocation()
+    const {login, googleSignIn} = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation()
     const handleLoginSubmit=e=>{
         e.preventDefault();
         const email=e.target.email.value;
@@ -26,16 +27,50 @@ const Login = () => {
             console.log("Error",error.message)
         })
     }
-    const handleGoogleSign=()=>{
+    const handleGoogleSign = () => {
         googleSignIn()
-        .then(result=>{
-            toast.success("Login succesFully");
-            navigate("/")
-        })
-        .catch(error=>{
-            toast.error(error.message)
-        })
+        .then(result => {
+            const data = result.user;
+            
+            // First check if user exists
+            axios.get(`http://localhost:5000/user/${data?.email}`)
+            .then(response => {
+                if (!response.data) {
+                    // New user - create with default role and coins
+                    const defaultRole = 'buyer';
+                    const defaultCoins = 50; // buyers get 50 coins by default
 
+                    axios.post(`http://localhost:5000/user/${data?.email}`, {
+                        name: data?.displayName,
+                        photo: data?.photoURL,
+                        email: data?.email,
+                        role: defaultRole,
+                        coins: defaultCoins
+                    })
+                    .then(res => {
+                        console.log('New user created:', res.data);
+                        toast.success("Account created and logged in successfully");
+                    })
+                    .catch(error => {
+                        console.error('Error saving user data:', error);
+                        toast.error("Error creating account");
+                    });
+                } else {
+                    // Existing user
+                    toast.success("Login successful");
+                }
+                
+                // Navigate after either creating new user or existing user login
+                navigate(location?.state ? location.state : "/");
+            })
+            .catch(error => {
+                console.error('Error checking user existence:', error);
+                toast.error("Error during login");
+            });
+        })
+        .catch(error => {
+            toast.error(error.message);
+        });
     }
     return (
         <div className="bg-base-200 min-h-screen flex flex-col justify-center items-center">

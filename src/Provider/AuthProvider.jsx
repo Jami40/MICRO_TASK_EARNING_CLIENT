@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react';
 import { auth } from '../Firebase/firebase.config';
+import axios from 'axios';
 
 export const AuthContext=createContext(null)
 
@@ -32,8 +33,22 @@ const AuthProvider = ({children}) => {
         return signOut(auth)
     }
     useEffect(()=>{
-        const unsubscribe= onAuthStateChanged(auth,currentUser=>{
+        const unsubscribe= onAuthStateChanged(auth,async currentUser=>{
              setUser(currentUser)
+            //  console.log(currentUser)
+            //  const userRole = localStorage.getItem('userRole');
+            //  console.log(userRole)
+            //  await axios.post(`http://localhost:5000/user/${currentUser?.email}`,{
+            //     name:currentUser?.displayName,
+            //     photo:currentUser?.photoURL,
+            //     email:currentUser?.email,
+            //     role: userRole || 'buyer',
+
+            //  })
+            //  .then(res=>console.log(res.data))
+            //  .catch(error => {
+            //     console.error('Error saving user data:', error);
+            // });
              setLoading(false)
          })
          return ()=>{
