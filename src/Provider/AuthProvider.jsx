@@ -7,6 +7,7 @@ export const AuthContext=createContext(null)
 
 const AuthProvider = ({children}) => {
     const [user,setUser]=useState(null)
+    const [findUser,setFindUser]=useState(null)
     const [loading,setLoading]=useState(true)
     const provider=new GoogleAuthProvider();
     const createUser=(email,password)=>{
@@ -32,6 +33,17 @@ const AuthProvider = ({children}) => {
         setLoading(true)
         return signOut(auth)
     }
+    useEffect(() => {
+        if (user?.email) {
+            axios.get(`http://localhost:5000/user/${user.email}`)
+                .then(response => {
+                    setFindUser(response.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching user coins:', error);
+                });
+        }
+    }, [user]);
     useEffect(()=>{
         const unsubscribe= onAuthStateChanged(auth,async currentUser=>{
              setUser(currentUser)
@@ -64,7 +76,8 @@ const AuthProvider = ({children}) => {
         loading,
         manageProfile,
         signOutUser,
-        setLoading
+        setLoading,
+        findUser
 
     }
     return (

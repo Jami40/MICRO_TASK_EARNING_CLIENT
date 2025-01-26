@@ -5,6 +5,9 @@ import MainLayout from "../Layout/MainLayout";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import Login from "../pages/Login/Login";
+import DashBoard from "../Layout/DashBoard/DashBoard";
+import AddTask from "../pages/Buyers/AddTask";
+import BuyersHome from "../pages/Buyers/BuyersHome";
 
  export const router = createBrowserRouter([
     {
@@ -25,4 +28,18 @@ import Login from "../pages/Login/Login";
         }
       ]
     },
+    {
+      path:'/dashboard',
+      element:<DashBoard></DashBoard>,
+      children:[
+        {
+          path:'/dashboard',
+          element:<BuyersHome></BuyersHome>
+        },
+        {
+          path:'add-tasks',
+          element:<AddTask></AddTask>,
+
+        }
+ ]}
   ]);
