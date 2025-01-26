@@ -8,6 +8,7 @@ import Login from "../pages/Login/Login";
 import DashBoard from "../Layout/DashBoard/DashBoard";
 import AddTask from "../pages/Buyers/AddTask";
 import BuyersHome from "../pages/Buyers/BuyersHome";
+import MyTask from "../pages/Buyers/MyTask";
 
  export const router = createBrowserRouter([
     {
@@ -40,6 +41,11 @@ import BuyersHome from "../pages/Buyers/BuyersHome";
           path:'add-tasks',
           element:<AddTask></AddTask>,
 
+        },
+        {
+          path:"my-tasks",
+          element:<MyTask></MyTask>
         }
+
  ]}
   ]);
