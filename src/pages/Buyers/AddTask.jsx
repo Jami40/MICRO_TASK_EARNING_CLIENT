@@ -42,7 +42,7 @@ const AddTask = ({userss}) => {
         
         const totalPayableAmount = formData.required_workers * formData.payable_amount;
         
-        if (totalPayableAmount > user.availableCoins) {
+        if (totalPayableAmount > findUser?.coins) {
             Swal.fire({
                 title: 'Insufficient Coins!',
                 text: 'You don\'t have enough coins to create this task. Would you like to purchase more?',
@@ -66,7 +66,15 @@ const AddTask = ({userss}) => {
                user_name: user?.displayName || '',
         user_email: user?.email || ''
            }
-           await axios.post('http://localhost:5000/task', taskData);
+          const taskrespons= await axios.post('http://localhost:5000/task', taskData);
+
+          if(taskrespons.data.insertedId){
+            const updateCoins=findUser.coins-totalPayableAmount;
+            await axios.patch(`http://localhost:5000/user/${findUser?.email}`,{
+                coins:updateCoins
+            })
+            toast.success('Coins credited succesfully!');
+        }
 
 
             // After successful API call:
