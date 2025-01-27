@@ -13,6 +13,7 @@ import WorkerHome from "../pages/Worker/WorkerHome";
 import TaskList from "../pages/Worker/TaskList";
 import DashBoardHome from "../Layout/DashBoard/DashBoardHome";
 import WorkerDetails from "../pages/Worker/WorkerDetails";
+import MySubmission from "../pages/Worker/MySubmission";
 
  export const router = createBrowserRouter([
     {
@@ -66,7 +67,12 @@ import WorkerDetails from "../pages/Worker/WorkerDetails";
         {
           path:'task-details/:id',
           element:<WorkerDetails></WorkerDetails>,
-          loader:({params})=>fetch(`http://localhost:5000/task/${params.id}`)
+          // loader:({params})=>fetch(`http://localhost:5000/task/${params.id}`)
+        },
+        {
+          path:'my-submissions',
+          element:<MySubmission></MySubmission>
+
         }
 
  ]}
