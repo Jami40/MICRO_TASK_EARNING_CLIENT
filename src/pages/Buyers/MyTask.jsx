@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 const MyTask = () => {
     const [tasks, setTasks] = useState([]);
-    const { user,findUser } = useContext(AuthContext);
+    const { user,findUser,setFindUser } = useContext(AuthContext);
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -50,6 +50,7 @@ const MyTask = () => {
                     await axios.patch(`http://localhost:5000/user/${findUser?.email}`,{
                         coins:updateCoins
                     })
+                    setFindUser({...findUser,coins:updateCoins})
                     toast.success('Coins credited succesfully!');
                 }                
                 // Update local state

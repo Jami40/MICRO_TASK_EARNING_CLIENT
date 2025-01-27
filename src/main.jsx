@@ -6,7 +6,8 @@ import { RouterProvider } from 'react-router-dom'
 import { router } from './Routes/router.jsx'
 import AuthProvider from './Provider/AuthProvider.jsx'
 import { ToastContainer } from 'react-toastify'
-
+//  admin@gmail.com
+// Admin123
 import {
   QueryClient,
   QueryClientProvider,

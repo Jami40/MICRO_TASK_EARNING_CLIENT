@@ -10,7 +10,7 @@ import axios from 'axios';
 import { AuthContext } from '../../Provider/AuthProvider';
 
 const AddTask = ({userss}) => {
-    const {user,findUser}=useContext(AuthContext)
+    const {user,findUser,setFindUser}=useContext(AuthContext)
     console.log(findUser)
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -73,6 +73,7 @@ const AddTask = ({userss}) => {
             await axios.patch(`http://localhost:5000/user/${findUser?.email}`,{
                 coins:updateCoins
             })
+            setFindUser({...findUser,coins:updateCoins})
             toast.success('Coins credited succesfully!');
         }
 
@@ -87,6 +88,7 @@ const AddTask = ({userss}) => {
                 navigate('/dashboard'); // or wherever you want to redirect
             });
         } catch (error) {
+            console.log(error)
             Swal.fire({
                 title: 'Error!',
                 text: 'Failed to create task. Please try again.',

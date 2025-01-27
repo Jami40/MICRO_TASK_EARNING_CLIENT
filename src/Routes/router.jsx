@@ -9,6 +9,10 @@ import DashBoard from "../Layout/DashBoard/DashBoard";
 import AddTask from "../pages/Buyers/AddTask";
 import BuyersHome from "../pages/Buyers/BuyersHome";
 import MyTask from "../pages/Buyers/MyTask";
+import WorkerHome from "../pages/Worker/WorkerHome";
+import TaskList from "../pages/Worker/TaskList";
+import DashBoardHome from "../Layout/DashBoard/DashBoardHome";
+import WorkerDetails from "../pages/Worker/WorkerDetails";
 
  export const router = createBrowserRouter([
     {
@@ -35,7 +39,16 @@ import MyTask from "../pages/Buyers/MyTask";
       children:[
         {
           path:'/dashboard',
+          element:<DashBoardHome></DashBoardHome>
+        },
+        {
+          path:'BuyersHome',
           element:<BuyersHome></BuyersHome>
+        },
+        {
+          path:'workerHome',
+          element:<WorkerHome></WorkerHome>
+
         },
         {
           path:'add-tasks',
@@ -45,6 +58,15 @@ import MyTask from "../pages/Buyers/MyTask";
         {
           path:"my-tasks",
           element:<MyTask></MyTask>
+        },
+        {
+          path:'task-list',
+          element:<TaskList></TaskList>
+        },
+        {
+          path:'task-details/:id',
+          element:<WorkerDetails></WorkerDetails>,
+          loader:({params})=>fetch(`http://localhost:5000/task/${params.id}`)
         }
 
  ]}

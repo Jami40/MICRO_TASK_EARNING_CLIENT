@@ -30,19 +30,19 @@ const DashBoard = () => {
 
     const navItems = {
         worker: [
-            { icon: FaHome, name: "Worker-Home", path: "/dashboard" },
+            { icon: FaHome, name: "Worker-Home", path: "/dashboard/workerHome" },
             { icon: FaList, name: "TaskList", path: "/dashboard/task-list" },
             { icon: FaFileAlt, name: "My Submissions", path: "/dashboard/my-submissions" },
             { icon: FaMoneyBillWave, name: "Withdrawals", path: "/dashboard/withdrawals" }
         ],
         buyer: [
-            { icon: FaHome, name: "Buyer-Home", path: "/dashboard" },
+            { icon: FaHome, name: "Buyer-Home", path: "/dashboard/BuyersHome" },
             { icon: FaTasks, name: "Add new Tasks", path: "/dashboard/add-tasks" },
             { icon: FaList, name: "My Task's", path: "/dashboard/my-tasks" },
             { icon: FaCoins, name: "Purchase Coin", path: "/dashboard/purchase-coin" }
         ],
         admin: [
-            { icon: FaHome, name: "Admin-Home", path: "/dashboard" },
+            { icon: FaHome, name: "Admin-Home", path: "/dashboard/admin" },
             { icon: FaUsers, name: "Manage Users", path: "/dashboard/manage-users" },
             { icon: FaTasks, name: "Manage Task", path: "/dashboard/manage-task" }
         ]

@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged,
 import React, { createContext, useEffect, useState } from 'react';
 import { auth } from '../Firebase/firebase.config';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export const AuthContext=createContext(null)
 
@@ -33,34 +34,9 @@ const AuthProvider = ({children}) => {
         setLoading(true)
         return signOut(auth)
     }
-    useEffect(() => {
-        if (user?.email) {
-            axios.get(`http://localhost:5000/user/${user.email}`)
-                .then(response => {
-                    setFindUser(response.data);
-                })
-                .catch(error => {
-                    console.error('Error fetching user coins:', error);
-                });
-        }
-    }, [user]);
     useEffect(()=>{
         const unsubscribe= onAuthStateChanged(auth,async currentUser=>{
              setUser(currentUser)
-            //  console.log(currentUser)
-            //  const userRole = localStorage.getItem('userRole');
-            //  console.log(userRole)
-            //  await axios.post(`http://localhost:5000/user/${currentUser?.email}`,{
-            //     name:currentUser?.displayName,
-            //     photo:currentUser?.photoURL,
-            //     email:currentUser?.email,
-            //     role: userRole || 'buyer',
-
-            //  })
-            //  .then(res=>console.log(res.data))
-            //  .catch(error => {
-            //     console.error('Error saving user data:', error);
-            // });
              setLoading(false)
          })
          return ()=>{
@@ -68,6 +44,17 @@ const AuthProvider = ({children}) => {
          }
  
      },[])
+     useEffect(() => {
+        if (user?.email) {
+            axios.get(`http://localhost:5000/user/${user?.email}`)
+                .then(response => {
+                    setFindUser(response.data);
+                })
+                .catch(error => {
+                    toast.error('Error fetching user coins:', error);
+                });
+        }
+    }, [user]);
     const AuthInfo={
         user,
         createUser,
@@ -77,7 +64,8 @@ const AuthProvider = ({children}) => {
         manageProfile,
         signOutUser,
         setLoading,
-        findUser
+        findUser,
+        setFindUser
 
     }
     return (
