@@ -20,13 +20,13 @@ const PaymentSuccess = () => {
             </p>
             <div className="space-y-4">
                 <button
-                    onClick={() => navigate('/purchase-coins')}
+                    onClick={() => navigate('/dashboard/purchase-coin')}
                     className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
                 >
                     Purchase More Coins
                 </button>
                 <button
-                    onClick={() => navigate('/payment/history')}
+                    onClick={() => navigate('/dashboard/payment/history')}
                     className="w-full bg-gray-100 text-gray-700 py-2 rounded-md hover:bg-gray-200"
                 >
                     View Payment History

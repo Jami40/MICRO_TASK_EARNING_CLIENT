@@ -15,7 +15,7 @@ const ManageTask = () => {
 
     const fetchTasks = async () => {
         try {
-            const { data } = await axios.get('http://localhost:5000/admin/tasks');
+            const { data } = await axios.get('https://micro-task-earning-server.vercel.app/admin/tasks');
             setTasks(data);
         } catch (error) {
             toast.error('Failed to fetch tasks');
@@ -44,7 +44,7 @@ const ManageTask = () => {
             if (result.isConfirmed) {
                 const loadingToast = toast.loading('Deleting task...');
                 
-                await axios.delete(`http://localhost:5000/admin/tasks/${taskId}`);
+                await axios.delete(`https://micro-task-earning-server.vercel.app/admin/tasks/${taskId}`);
                 
                 toast.dismiss(loadingToast);
                 toast.success('Task deleted successfully');

@@ -9,7 +9,7 @@ const TaskList = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/task');
+                const response = await axios.get('https://micro-task-earning-server.vercel.app/task');
                 // Filter tasks where required_worker > 0
                 const availableTasks = response.data.filter(task => task.required_workers > 0);
                 setTasks(availableTasks);

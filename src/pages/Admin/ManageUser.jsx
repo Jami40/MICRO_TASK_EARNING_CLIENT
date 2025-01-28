@@ -15,7 +15,7 @@ const ManageUsers = () => {
 
     const fetchUsers = async () => {
         try {
-            const { data } = await axios.get('http://localhost:5000/admin/users');
+            const { data } = await axios.get('https://micro-task-earning-server.vercel.app/admin/users');
             setUsers(data);
         } catch (error) {
             toast.error('Failed to fetch users');

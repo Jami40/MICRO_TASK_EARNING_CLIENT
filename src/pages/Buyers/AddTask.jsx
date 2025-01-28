@@ -66,11 +66,11 @@ const AddTask = ({userss}) => {
                user_name: user?.displayName || '',
         user_email: user?.email || ''
            }
-          const taskrespons= await axios.post('http://localhost:5000/task', taskData);
+          const taskrespons= await axios.post('https://micro-task-earning-server.vercel.app/task', taskData);
 
           if(taskrespons.data.insertedId){
             const updateCoins=findUser.coins-totalPayableAmount;
-            await axios.patch(`http://localhost:5000/user/${findUser?.email}`,{
+            await axios.patch(`https://micro-task-earning-server.vercel.app/user/${findUser?.email}`,{
                 coins:updateCoins
             })
             setFindUser({...findUser,coins:updateCoins})

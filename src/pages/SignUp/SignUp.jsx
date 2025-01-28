@@ -45,7 +45,7 @@ const SignUp = () => {
             localStorage.setItem('userRole', role)
             
             // Update API call to include coins
-            axios.post(`http://localhost:5000/user/email`, UsersData)
+            axios.post(`https://micro-task-earning-server.vercel.app/user/email`, UsersData)
             .then(res => {
                 console.log(res.data);
                 localStorage.setItem('userCoins', coins.toString());
@@ -67,7 +67,7 @@ const SignUp = () => {
             const defaultRole = 'buyer';
             const coins = getInitialCoins(defaultRole);
 
-            axios.post(`http://localhost:5000/user/${data?.email}`, {
+            axios.post(`https://micro-task-earning-server.vercel.app/user/${data?.email}`, {
                 name: data?.displayName,
                 photo: data?.photoURL,
                 email: data?.email,

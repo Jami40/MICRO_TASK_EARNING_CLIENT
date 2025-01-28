@@ -24,11 +24,11 @@ const BuyerDashboard = () => {
         try {
             setLoading(true);
             // Fetch stats
-            const statsRes = await axios.get(`http://localhost:5000/buyer-stats/${findUser?.email}`);
+            const statsRes = await axios.get(`https://micro-task-earning-server.vercel.app/buyer-stats/${findUser?.email}`);
             setStats(statsRes.data);
 
             // Fetch pending submissions
-            const submissionsRes = await axios.get(`http://localhost:5000/pending-submissions/${findUser?.email}`);
+            const submissionsRes = await axios.get(`https://micro-task-earning-server.vercel.app/pending-submissions/${findUser?.email}`);
             setPendingSubmissions(submissionsRes.data);
         } catch (error) {
             console.error('Error:', error);
@@ -40,7 +40,7 @@ const BuyerDashboard = () => {
 
     const handleApprove = async (submissionId) => {
         try {
-            const response = await axios.patch(`http://localhost:5000/submissions/approve/${submissionId}`);
+            const response = await axios.patch(`https://micro-task-earning-server.vercel.app/submissions/approve/${submissionId}`);
             if (response.data.success) {
                 toast.success('Submission approved successfully');
                 fetchDashboardData(); // Refresh data
@@ -53,7 +53,7 @@ const BuyerDashboard = () => {
 
     const handleReject = async (submissionId, taskId) => {
         try {
-            const response = await axios.patch(`http://localhost:5000/submissions/reject/${submissionId}`, {
+            const response = await axios.patch(`https://micro-task-earning-server.vercel.app/submissions/reject/${submissionId}`, {
                 taskId
             });
             if (response.data.success) {

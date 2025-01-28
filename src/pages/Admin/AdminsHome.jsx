@@ -22,7 +22,7 @@ const AdminsHome = () => {
 
     const fetchDashboardData = async () => {
         try {
-            const { data } = await axios.get('http://localhost:5000/admin/dashboard-stats');
+            const { data } = await axios.get('https://micro-task-earning-server.vercel.app/admin/dashboard-stats');
             setStats(data);
         } catch (error) {
             toast.error('Failed to fetch dashboard statistics');

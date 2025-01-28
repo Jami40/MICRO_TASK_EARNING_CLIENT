@@ -20,6 +20,7 @@ import PaymentSucces from "../Components/PaymentSucces";
 import AdminsHome from "../pages/Admin/AdminsHome";
 import ManageUsers from "../pages/Admin/ManageUser";
 import ManageTask from "../pages/Admin/ManageTask";
+import PaymentHistory from "../pages/Buyers/PaymentHistory";
 
  export const router = createBrowserRouter([
     {
@@ -73,7 +74,7 @@ import ManageTask from "../pages/Admin/ManageTask";
         {
           path:'task-details/:id',
           element:<WorkerDetails></WorkerDetails>,
-          // loader:({params})=>fetch(`http://localhost:5000/task/${params.id}`)
+          // loader:({params})=>fetch(`https://micro-task-earning-server.vercel.app/task/${params.id}`)
         },
         {
           path:'my-submissions',
@@ -92,6 +93,10 @@ import ManageTask from "../pages/Admin/ManageTask";
         {
           path:'payment/success',
           element:<PaymentSucces></PaymentSucces>
+        },
+        {
+          path:'payment/history',
+          element:<PaymentHistory></PaymentHistory>
         },
         {
           path:'adminHome',

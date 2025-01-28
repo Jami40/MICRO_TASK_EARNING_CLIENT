@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 // import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -10,10 +10,14 @@ import {
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
+import { AuthContext } from '../Provider/AuthProvider';
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENTS_PUBLIC_KEY);
 
 
+
 const CheckoutForm = ({ amount, coins }) => {
+    const {findUser}=useContext(AuthContext)
     const stripe = useStripe();
     const elements = useElements();
     const navigate = useNavigate();
@@ -30,9 +34,9 @@ const CheckoutForm = ({ amount, coins }) => {
         }
 
         try {
-            // const processingToast = toast.loading('Processing payment...');
+            const processingToast = toast.loading('Processing payment...');
 
-            // const response = await fetch('http://localhost:5000/payments/create-intentt', {
+            // const response = await fetch('https://micro-task-earning-server.vercel.app/payments/create-intentt', {
             //     method: 'POST',
             //     headers: {
             //         'Content-Type': 'application/json',
@@ -52,7 +56,7 @@ const CheckoutForm = ({ amount, coins }) => {
             // );
 
             // 
-            const { data: paymentIntentData } = await axios.post('http://localhost:5000/payments/create-intent', {
+            const { data: paymentIntentData } = await axios.post('https://micro-task-earning-server.vercel.app/payments/create-intent', {
                 amount: amount * 100,
             });
     
@@ -87,33 +91,31 @@ const CheckoutForm = ({ amount, coins }) => {
             }
         } catch (err) {
             toast.error('Payment failed. Please try again.');
+            console.log('Error:', err);
             setError('Payment failed. Please try again.');
         }
         setProcessing(false);
     };
 
     const savePaymentInfo = async (paymentIntent, coins) => {
-        try {
-            const saveToast = toast.loading('Saving payment information...');
+
+            // const saveToast = toast.loading('Saving payment information...');
             
-            await fetch('http://localhost:5000/payments/save-payment', {
+            await fetch('https://micro-task-earning-server.vercel.app/payments/save-payment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     paymentId: paymentIntent.id,
-                    amount: amount,
-                    coins: coins,
+                   amount: amount,
+                   coins: coins,
+                   buyer_email: findUser?.email,
+                   status: 'completed',
+                   transactionDate: new Date(),
                 }),
             });
-
-            toast.dismiss(saveToast);
-            toast.success('Payment information saved successfully!');
-        } catch (err) {
-            console.error('Error saving payment:', err);
-            toast.error('Error saving payment information');
-        }
+            toast.success('Payment information saved successfully');
     };
 
     return (

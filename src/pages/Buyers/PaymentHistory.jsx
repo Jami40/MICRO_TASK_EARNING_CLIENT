@@ -1,22 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { FaCoins } from 'react-icons/fa';
+import { MdPayment } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../Provider/AuthProvider';
 
 const PaymentHistory = () => {
-    const [transactions, setTransactions] = useState([]);
+    const [payments, setPayments] = useState([]);
     const [loading, setLoading] = useState(true);
+    const {findUser}=useContext(AuthContext)
 
     useEffect(() => {
-        fetchTransactions();
+        fetchPaymentHistory();
     }, []);
 
-    const fetchTransactions = async () => {
+    const fetchPaymentHistory = async () => {
         try {
-            const response = await fetch('http://localhost:5000/payment-history');
+            const response = await fetch(`https://micro-task-earning-server.vercel.app/payments/history/${findUser?.email}`);
             const data = await response.json();
-            setTransactions(data);
+            
+            if (response.ok) {
+                setPayments(data);
+            } else {
+                throw new Error(data.message);
+            }
         } catch (error) {
-            toast.error('Failed to load payment history');
-            console.error('Error fetching transactions:', error);
+            toast.error('Failed to fetch payment history');
+            console.error('Error:', error);
         } finally {
             setLoading(false);
         }
@@ -24,64 +33,95 @@ const PaymentHistory = () => {
 
     if (loading) {
         return (
-            <div className="max-w-4xl mx-auto mt-10 p-6 text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+            <div className="flex justify-center items-center h-[60vh]">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
             </div>
         );
     }
 
     return (
-        <div className="max-w-4xl mx-auto mt-10 p-6">
-            <h2 className="text-2xl font-bold mb-6">Payment History</h2>
-            <div className="overflow-x-auto bg-white rounded-lg shadow">
-                <table className="min-w-full">
-                    <thead>
-                        <tr className="bg-gray-50 border-b">
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Date
-                            </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Transaction ID
-                            </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Amount
-                            </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Coins
-                            </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                        {transactions.map((transaction) => (
-                            <tr key={transaction.id} className="hover:bg-gray-50">
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    {new Date(transaction.date).toLocaleDateString()}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    {transaction.id}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    ${transaction.amount}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    {transaction.coins}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                                        transaction.status === 'completed'
-                                            ? 'bg-green-100 text-green-800'
-                                            : 'bg-yellow-100 text-yellow-800'
-                                    }`}>
-                                        {transaction.status}
-                                    </span>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+        <div className="p-6">
+            <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+                <div className="p-6">
+                    <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                        <MdPayment className="text-primary" />
+                        Payment History
+                    </h2>
+
+                    <div className="overflow-x-auto">
+                        <table className="table w-full">
+                            {/* Table Head */}
+                            <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Coins</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            {/* Table Body */}
+                            <tbody>
+                                {payments.map((payment) => (
+                                    <tr key={payment._id}>
+                                        {/* Transaction ID */}
+                                        <td>
+                                            <div className="font-mono text-sm">
+                                                {payment.paymentId.slice(0, 15)}...
+                                            </div>
+                                        </td>
+
+                                        {/* Date */}
+                                        <td>
+                                            <div className="text-sm">
+                                                {new Date(payment.transactionDate).toLocaleDateString()} 
+                                                <br />
+                                                <span className="text-gray-500">
+                                                    {new Date(payment.transactionDate).toLocaleTimeString()}
+                                                </span>
+                                            </div>
+                                        </td>
+
+                                        {/* Amount */}
+                                        <td>
+                                            <div className="font-semibold">
+                                                ${payment.amount}
+                                            </div>
+                                        </td>
+
+                                        {/* Coins */}
+                                        <td>
+                                            <div className="flex items-center gap-1">
+                                                <FaCoins className="text-yellow-500" />
+                                                <span>{payment.coins}</span>
+                                            </div>
+                                        </td>
+
+                                        {/* Status */}
+                                        <td>
+                                            <span className={`badge ${
+                                                payment.status === 'completed' 
+                                                    ? 'badge-success' 
+                                                    : payment.status === 'pending'
+                                                    ? 'badge-warning'
+                                                    : 'badge-error'
+                                            }`}>
+                                                {payment.status}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {payments.length === 0 && (
+                        <div className="text-center py-8 text-gray-500">
+                            No payment history found
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

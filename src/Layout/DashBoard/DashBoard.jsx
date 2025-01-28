@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { FaHome, FaList, FaFileAlt, FaMoneyBillWave, FaUsers, FaTasks, FaCoins, FaBell, FaUser } from 'react-icons/fa';
+import { FaHome, FaList, FaFileAlt, FaMoneyBillWave, FaUsers, FaTasks, FaCoins, FaBell, FaUser, FaHighlighter } from 'react-icons/fa';
 import logoImg from '../../assets/logo.png'
 import { AuthContext } from '../../Provider/AuthProvider';
 import axios from 'axios';
@@ -11,7 +11,7 @@ const DashBoard = () => {
 
     useEffect(() => {
         if (user?.email) {
-            axios.get(`http://localhost:5000/user/${user.email}`)
+            axios.get(`https://micro-task-earning-server.vercel.app/user/${user.email}`)
                 .then(response => {
                     setUserDashBoard(response.data);
                 })
@@ -39,7 +39,8 @@ const DashBoard = () => {
             { icon: FaHome, name: "Buyer-Home", path: "/dashboard/BuyersHome" },
             { icon: FaTasks, name: "Add new Tasks", path: "/dashboard/add-tasks" },
             { icon: FaList, name: "My Task's", path: "/dashboard/my-tasks" },
-            { icon: FaCoins, name: "Purchase Coin", path: "/dashboard/purchase-coin" }
+            { icon: FaCoins, name: "Purchase Coin", path: "/dashboard/purchase-coin" },
+            { icon: FaHighlighter, name: "Payment History", path: "/dashboard/payment/history" }
         ],
         admin: [
             { icon: FaHome, name: "Admin-Home", path: "/dashboard/adminHome" },

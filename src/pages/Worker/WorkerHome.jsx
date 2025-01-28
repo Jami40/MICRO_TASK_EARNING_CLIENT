@@ -17,7 +17,7 @@ const WorkerStats = () => {
         const fetchWorkerData = async () => {
             try {
                 // Fetch all submissions for stats
-                const response = await axios.get(`http://localhost:5000/taskSubmission/${findUser?.email}`);
+                const response = await axios.get(`https://micro-task-earning-server.vercel.app/taskSubmission/${findUser?.email}`);
                 const submissions = response.data;
 
                 // Calculate stats

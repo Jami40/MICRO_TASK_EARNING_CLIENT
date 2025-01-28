@@ -14,7 +14,7 @@ const MySubmissions = () => {
     useEffect(() => {
         const fetchSubmissions = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/taskSubmission/${findUser?.email}`);
+                const response = await axios.get(`https://micro-task-earning-server.vercel.app/taskSubmission/${findUser?.email}`);
                 setSubmissions(response.data);
                 setLoading(false);
             } catch (error) {

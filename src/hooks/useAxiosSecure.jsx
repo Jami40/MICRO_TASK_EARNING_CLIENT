@@ -3,7 +3,7 @@ import React from 'react';
 
 export const axiosSecure=axios.create(
  {
-    baseURL:'http://localhost:5000'
+    baseURL:'https://micro-task-earning-server.vercel.app'
  }
 )
 const useAxiosSecure = () => {

@@ -33,14 +33,14 @@ const Login = () => {
             const data = result.user;
             
             // First check if user exists
-            axios.get(`http://localhost:5000/user/${data?.email}`)
+            axios.get(`https://micro-task-earning-server.vercel.app/user/${data?.email}`)
             .then(response => {
                 if (!response.data) {
                     // New user - create with default role and coins
                     const defaultRole = 'buyer';
                     const defaultCoins = 50; // buyers get 50 coins by default
 
-                    axios.post(`http://localhost:5000/user/${data?.email}`, {
+                    axios.post(`https://micro-task-earning-server.vercel.app/user/${data?.email}`, {
                         name: data?.displayName,
                         photo: data?.photoURL,
                         email: data?.email,

@@ -46,7 +46,7 @@ const AuthProvider = ({children}) => {
      },[])
      useEffect(() => {
         if (user?.email) {
-            axios.get(`http://localhost:5000/user/${user?.email}`)
+            axios.get(`https://micro-task-earning-server.vercel.app/user/${user?.email}`)
                 .then(response => {
                     setFindUser(response.data);
                 })

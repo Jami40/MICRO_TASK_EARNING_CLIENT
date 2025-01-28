@@ -17,7 +17,7 @@ const MyTask = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/task/${findUser.email}`);
+                const response = await axios.get(`https://micro-task-earning-server.vercel.app/task/${findUser.email}`);
                 setTasks(response.data);
             } catch (error) {
                 console.error('Error fetching tasks:', error);
@@ -44,10 +44,10 @@ const MyTask = () => {
             });
 
             if (result.isConfirmed) {
-                const deletedtask=await axios.delete(`http://localhost:5000/task/${taskId}`);
+                const deletedtask=await axios.delete(`https://micro-task-earning-server.vercel.app/task/${taskId}`);
                 if(deletedtask.data.deletedCount){
                     const updateCoins=findUser.coins+refillAmount;
-                    await axios.patch(`http://localhost:5000/user/${findUser?.email}`,{
+                    await axios.patch(`https://micro-task-earning-server.vercel.app/user/${findUser?.email}`,{
                         coins:updateCoins
                     })
                     setFindUser({...findUser,coins:updateCoins})
@@ -83,7 +83,7 @@ const MyTask = () => {
         };
 
         try {
-            await axios.patch(`http://localhost:5000/task/${selectedTask._id}`, updatedData);
+            await axios.patch(`https://micro-task-earning-server.vercel.app/task/${selectedTask._id}`, updatedData);
 
             // Update local state
             setTasks(tasks.map(task => 

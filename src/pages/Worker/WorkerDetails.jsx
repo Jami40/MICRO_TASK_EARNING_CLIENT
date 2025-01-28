@@ -19,7 +19,7 @@ const WorkerDetails = () => {
     useEffect(() => {
         const fetchTaskDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/singleTask/${id}`);
+                const response = await axios.get(`https://micro-task-earning-server.vercel.app/singleTask/${id}`);
                 setTask(response.data);
                 setLoading(false);
             } catch (error) {
@@ -50,7 +50,7 @@ const WorkerDetails = () => {
         };
 
         try {
-            await axios.post('http://localhost:5000/taskSubmission', submissionData);
+            await axios.post('https://micro-task-earning-server.vercel.app/taskSubmission', submissionData);
             toast.success('Submission successful!');
             setSubmissionDetails('');
         } catch (error) {
