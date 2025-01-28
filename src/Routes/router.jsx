@@ -14,6 +14,9 @@ import TaskList from "../pages/Worker/TaskList";
 import DashBoardHome from "../Layout/DashBoard/DashBoardHome";
 import WorkerDetails from "../pages/Worker/WorkerDetails";
 import MySubmission from "../pages/Worker/MySubmission";
+import PurchaseCoin from "../pages/Buyers/PurchaseCoin";
+import PaymentProcess from "../Components/PaymentProcess";
+import PaymentSucces from "../Components/PaymentSucces";
 
  export const router = createBrowserRouter([
     {
@@ -73,6 +76,19 @@ import MySubmission from "../pages/Worker/MySubmission";
           path:'my-submissions',
           element:<MySubmission></MySubmission>
 
+        },
+        {
+          path:'purchase-coin',
+          element:<PurchaseCoin></PurchaseCoin>
+
+        },
+        {
+          path:'payment/process',
+          element:<PaymentProcess></PaymentProcess>
+        },
+        {
+          path:'payment/success',
+          element:<PaymentSucces></PaymentSucces>
         }
 
  ]}

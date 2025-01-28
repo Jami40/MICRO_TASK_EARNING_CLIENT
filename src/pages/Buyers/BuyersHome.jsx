@@ -22,44 +22,46 @@ const BuyerDashboard = () => {
 
     const fetchDashboardData = async () => {
         try {
-            // Fetch buyer stats
-            const statsResponse = await axios.get(`http://localhost:5000/buyer-stats/${findUser?.email}`);
-            setStats(statsResponse.data);
+            setLoading(true);
+            // Fetch stats
+            const statsRes = await axios.get(`http://localhost:5000/buyer-stats/${findUser?.email}`);
+            setStats(statsRes.data);
 
             // Fetch pending submissions
-            const submissionsResponse = await axios.get(`http://localhost:5000/pending-submissions?buyerEmail=${findUser?.email}`);
-            setPendingSubmissions(submissionsResponse.data);
-            setLoading(false);
+            const submissionsRes = await axios.get(`http://localhost:5000/pending-submissions/${findUser?.email}`);
+            setPendingSubmissions(submissionsRes.data);
         } catch (error) {
-            console.error('Error fetching dashboard data:', error);
+            console.error('Error:', error);
             toast.error('Failed to load dashboard data');
+        } finally {
             setLoading(false);
         }
     };
 
     const handleApprove = async (submissionId) => {
         try {
-            await axios.patch(`http://localhost:5000/submissions/approve/${submissionId}`, {
-                buyerEmail: user.email
-            });
-            toast.success('Submission approved successfully');
-            fetchDashboardData(); // Refresh data
+            const response = await axios.patch(`http://localhost:5000/submissions/approve/${submissionId}`);
+            if (response.data.success) {
+                toast.success('Submission approved successfully');
+                fetchDashboardData(); // Refresh data
+            }
         } catch (error) {
-            console.error('Error approving submission:', error);
+            console.error('Error:', error);
             toast.error('Failed to approve submission');
         }
     };
 
     const handleReject = async (submissionId, taskId) => {
         try {
-            await axios.patch(`http://localhost:5000/submissions/reject/${submissionId}`, {
-                taskId,
-                buyerEmail: user.email
+            const response = await axios.patch(`http://localhost:5000/submissions/reject/${submissionId}`, {
+                taskId
             });
-            toast.success('Submission rejected successfully');
-            fetchDashboardData(); // Refresh data
+            if (response.data.success) {
+                toast.success('Submission rejected successfully');
+                fetchDashboardData(); // Refresh data
+            }
         } catch (error) {
-            console.error('Error rejecting submission:', error);
+            console.error('Error:', error);
             toast.error('Failed to reject submission');
         }
     };
@@ -74,7 +76,7 @@ const BuyerDashboard = () => {
 
     return (
         <div className="container mx-auto p-4">
-            {/* Stats Cards */}
+            {/* Stats Section */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div className="stats shadow">
                     <div className="stat">
@@ -107,7 +109,7 @@ const BuyerDashboard = () => {
                 </div>
             </div>
 
-            {/* Pending Submissions Table */}
+            {/* Submissions Table */}
             <div className="bg-base-100 rounded-lg shadow-xl">
                 <div className="p-4 border-b">
                     <h2 className="text-xl font-bold">Tasks To Review</h2>
