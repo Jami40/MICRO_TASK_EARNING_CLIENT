@@ -1,6 +1,7 @@
+import { loadStripe } from '@stripe/stripe-js';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+export const stripePromise = loadStripe(import.meta.env.VITE_PAYMENTS_PUBLIC_KEY);
 const PaymentSuccess = () => {
     const navigate = useNavigate();
 

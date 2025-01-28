@@ -42,7 +42,7 @@ const DashBoard = () => {
             { icon: FaCoins, name: "Purchase Coin", path: "/dashboard/purchase-coin" }
         ],
         admin: [
-            { icon: FaHome, name: "Admin-Home", path: "/dashboard/admin" },
+            { icon: FaHome, name: "Admin-Home", path: "/dashboard/adminHome" },
             { icon: FaUsers, name: "Manage Users", path: "/dashboard/manage-users" },
             { icon: FaTasks, name: "Manage Task", path: "/dashboard/manage-task" }
         ]

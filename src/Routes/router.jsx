@@ -17,6 +17,9 @@ import MySubmission from "../pages/Worker/MySubmission";
 import PurchaseCoin from "../pages/Buyers/PurchaseCoin";
 import PaymentProcess from "../Components/PaymentProcess";
 import PaymentSucces from "../Components/PaymentSucces";
+import AdminsHome from "../pages/Admin/AdminsHome";
+import ManageUsers from "../pages/Admin/ManageUser";
+import ManageTask from "../pages/Admin/ManageTask";
 
  export const router = createBrowserRouter([
     {
@@ -89,6 +92,18 @@ import PaymentSucces from "../Components/PaymentSucces";
         {
           path:'payment/success',
           element:<PaymentSucces></PaymentSucces>
+        },
+        {
+          path:'adminHome',
+          element:<AdminsHome></AdminsHome>
+        },
+        {
+          path:'manage-users',
+          element:<ManageUsers></ManageUsers>
+        },
+        {
+          path:'manage-task',
+          element:<ManageTask></ManageTask>
         }
 
  ]}

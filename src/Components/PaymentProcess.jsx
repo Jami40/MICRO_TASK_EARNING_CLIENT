@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { loadStripe } from '@stripe/stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
 import {
     CardElement,
     Elements,
@@ -9,8 +9,9 @@ import {
 } from '@stripe/react-stripe-js';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
-
+import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENTS_PUBLIC_KEY);
+
 
 const CheckoutForm = ({ amount, coins }) => {
     const stripe = useStripe();
@@ -29,29 +30,43 @@ const CheckoutForm = ({ amount, coins }) => {
         }
 
         try {
-            const processingToast = toast.loading('Processing payment...');
+            // const processingToast = toast.loading('Processing payment...');
 
-            const response = await fetch('http://localhost:5000/create-payment-intent', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ amount: amount * 100 }),
+            // const response = await fetch('http://localhost:5000/payments/create-intentt', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify({ amount: amount * 100 }),
+            // });
+
+            // const data = await response.json();
+
+            // const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(
+            //     data.clientSecret,
+            //     {
+            //         payment_method: {
+            //             card: elements.getElement(CardElement),
+            //         },
+            //     }
+            // );
+
+            // 
+            const { data: paymentIntentData } = await axios.post('http://localhost:5000/payments/create-intent', {
+                amount: amount * 100,
             });
-
-            const data = await response.json();
-
+    
             const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(
-                data.clientSecret,
+                paymentIntentData.clientSecret,
                 {
                     payment_method: {
                         card: elements.getElement(CardElement),
                     },
                 }
             );
-
             toast.dismiss(processingToast);
-
+    
+            // toast.dismiss(processingToast);
             if (stripeError) {
                 setError(stripeError.message);
                 toast.error(stripeError.message);
@@ -81,7 +96,7 @@ const CheckoutForm = ({ amount, coins }) => {
         try {
             const saveToast = toast.loading('Saving payment information...');
             
-            await fetch('http://localhost:5000/save-payment', {
+            await fetch('http://localhost:5000/payments/save-payment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
