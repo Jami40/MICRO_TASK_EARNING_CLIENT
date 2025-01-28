@@ -6,7 +6,7 @@ import { AuthContext } from '../../Provider/AuthProvider';
 
 const PaymentHistory = () => {
     const [payments, setPayments] = useState([]);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     const {findUser}=useContext(AuthContext)
 
     useEffect(() => {
@@ -14,7 +14,7 @@ const PaymentHistory = () => {
     }, []);
 
     const fetchPaymentHistory = async () => {
-        try {
+        // try {
             const response = await fetch(`https://micro-task-earning-server.vercel.app/payments/history/${findUser?.email}`);
             const data = await response.json();
             
@@ -23,21 +23,14 @@ const PaymentHistory = () => {
             } else {
                 throw new Error(data.message);
             }
-        } catch (error) {
-            toast.error('Failed to fetch payment history');
-            console.error('Error:', error);
-        } finally {
-            setLoading(false);
-        }
+        // } catch (error) {
+        //     toast.error('Failed to fetch payment history');
+        //     console.error('Error:', error);
+        // } finally {
+        //     setLoading(false);
+        // }
     };
 
-    if (loading) {
-        return (
-            <div className="flex justify-center items-center h-[60vh]">
-                <span className="loading loading-spinner loading-lg text-primary"></span>
-            </div>
-        );
-    }
 
     return (
         <div className="p-6">
