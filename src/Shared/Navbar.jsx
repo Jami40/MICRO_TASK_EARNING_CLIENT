@@ -25,7 +25,10 @@ const Navbar = () => {
     const navItems = (
         <>
             <li><Link to="/">Home</Link></li>
-            {user && <li><Link to="/dashboard">Dashboard</Link></li>}
+            
+            <li><Link to="/all-products" className="hover:bg-white/10 rounded-lg transition-all duration-300">All Products</Link></li>
+                            <li><Link to="/about" className="hover:bg-white/10 rounded-lg transition-all duration-300">About Us</Link></li>
+                            {user && <li><Link to="/dashboard">Dashboard</Link></li>}
             <li>
                 <a 
                     href="https://github.com/your-repo-url" 
@@ -66,9 +69,20 @@ const Navbar = () => {
                             {user && (
                                 <>
                                     <li><Link to="/dashboard" className="hover:bg-white/10 rounded-lg transition-all duration-300">Dashboard</Link></li>
-                                    <li><Link to="/my-orders" className="hover:bg-white/10 rounded-lg transition-all duration-300">My Orders</Link></li>
                                 </>
                             )}
+                            <li>
+                <a 
+                    href="https://github.com/your-repo-url" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center gap-2 hover:bg-white/10 rounded-lg transition-all duration-300"
+                >
+                    <FaGithub className="text-xl" /> Join as Developer
+                </a>
+            </li>
+
+
                         </ul>
                     </div>
                     

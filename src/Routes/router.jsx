@@ -22,6 +22,7 @@ import ManageUsers from "../pages/Admin/ManageUser";
 import ManageTask from "../pages/Admin/ManageTask";
 import PaymentHistory from "../pages/Buyers/PaymentHistory";
 import WithDrawls from "../pages/Worker/WithDrawls";
+import About from "../pages/About/About";
 
  export const router = createBrowserRouter([
     {
@@ -41,6 +42,14 @@ import WithDrawls from "../pages/Worker/WithDrawls";
             element:<Login></Login>
         }
       ]
+    },
+    {
+      path:'/about',
+      element:<About></About>
+    },
+    {
+      path:'/allTask',
+
     },
     {
       path:'/dashboard',
