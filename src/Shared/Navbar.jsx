@@ -26,7 +26,7 @@ const Navbar = () => {
         <>
             <li><Link to="/">Home</Link></li>
             
-            <li><Link to="/all-products" className="hover:bg-white/10 rounded-lg transition-all duration-300">All Products</Link></li>
+            <li><Link to="/allTask" className="hover:bg-white/10 rounded-lg transition-all duration-300">All Tasks</Link></li>
                             <li><Link to="/about" className="hover:bg-white/10 rounded-lg transition-all duration-300">About Us</Link></li>
                             {user && <li><Link to="/dashboard">Dashboard</Link></li>}
             <li>
@@ -64,7 +64,7 @@ const Navbar = () => {
                     <div className="navbar-center hidden lg:flex">
                         <ul className="menu menu-horizontal px-1 gap-2 text-white font-medium">
                             <li><Link to="/" className="hover:bg-white/10 rounded-lg transition-all duration-300">Home</Link></li>
-                            <li><Link to="/all-products" className="hover:bg-white/10 rounded-lg transition-all duration-300">All Products</Link></li>
+                            <li><Link to="/allTask" className="hover:bg-white/10 rounded-lg transition-all duration-300">All Tasks</Link></li>
                             <li><Link to="/about" className="hover:bg-white/10 rounded-lg transition-all duration-300">About Us</Link></li>
                             {user && (
                                 <>

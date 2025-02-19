@@ -23,6 +23,7 @@ import ManageTask from "../pages/Admin/ManageTask";
 import PaymentHistory from "../pages/Buyers/PaymentHistory";
 import WithDrawls from "../pages/Worker/WithDrawls";
 import About from "../pages/About/About";
+import AllTask from "../pages/AllTask/AllTask";
 
  export const router = createBrowserRouter([
     {
@@ -49,6 +50,7 @@ import About from "../pages/About/About";
     },
     {
       path:'/allTask',
+      element:<AllTask></AllTask>
 
     },
     {
