@@ -1,7 +1,7 @@
 # TOLOKO - Micro Task Earning Platform
 
 ## Live Demo
-🌐 [Live Site](https://poor-owl.surge.sh/)
+🌐 [Live Site](https://micro-task-and-earning.vercel.app/)
 🖥️ [Server](https://vercel.com/jami23s-projects/micro-task-earning-server)
 
 
