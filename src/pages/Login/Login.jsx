@@ -17,7 +17,7 @@ const Login = () => {
         .then(result=>{
             console.log(result.user)
             e.target.reset();
-            navigate(location?.state ? location.state:"/")
+            navigate("/dashboard")
             toast.success("Login succesFully");
 
         })
@@ -61,7 +61,7 @@ const Login = () => {
                 }
                 
                 // Navigate after either creating new user or existing user login
-                navigate(location?.state ? location.state : "/");
+                navigate( "/dashboard");
             })
             .catch(error => {
                 console.error('Error checking user existence:', error);

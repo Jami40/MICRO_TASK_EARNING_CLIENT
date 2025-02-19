@@ -8,3 +8,20 @@
 body{
   font-family: "Inter", serif;
 }
+
+
+.testimonial-swiper .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #ddd;
+  opacity: 1;
+}
+
+.testimonial-swiper .swiper-pagination-bullet-active {
+  background: #4f46e5; /* primary color */
+}
+
+.testimonial-swiper .swiper-slide {
+  height: auto;
+  padding-bottom: 50px; /* Space for pagination */
+}

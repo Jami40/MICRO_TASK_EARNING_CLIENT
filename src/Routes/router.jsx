@@ -21,6 +21,7 @@ import AdminsHome from "../pages/Admin/AdminsHome";
 import ManageUsers from "../pages/Admin/ManageUser";
 import ManageTask from "../pages/Admin/ManageTask";
 import PaymentHistory from "../pages/Buyers/PaymentHistory";
+import WithDrawls from "../pages/Worker/WithDrawls";
 
  export const router = createBrowserRouter([
     {
@@ -109,6 +110,10 @@ import PaymentHistory from "../pages/Buyers/PaymentHistory";
         {
           path:'manage-task',
           element:<ManageTask></ManageTask>
+        },
+        {
+          path:'withdrawals',
+          element:<WithDrawls></WithDrawls>
         }
 
  ]}

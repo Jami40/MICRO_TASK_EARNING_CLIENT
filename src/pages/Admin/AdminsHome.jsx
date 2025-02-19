@@ -31,7 +31,7 @@ const AdminsHome = () => {
 
     const fetchWithdrawRequests = async () => {
         try {
-            const { data } = await axios.get('/admin/withdraw-requests');
+            const { data } = await axios.get('https://micro-task-earning-server.vercel.app/admin/withdraw-requests');
             setWithdrawRequests(data);
         } catch (error) {
             toast.error('Failed to fetch withdrawal requests');
@@ -59,7 +59,7 @@ const AdminsHome = () => {
             if (result.isConfirmed) {
                 const loadingToast = toast.loading('Processing withdrawal...');
 
-                await axios.patch(`/api/admin/approve-withdrawal/${withdrawalId}`, {
+                await axios.patch(`https://micro-task-earning-server.vercel.app/admin/approve-withdrawal/${withdrawalId}`, {
                     userEmail,
                     amount
                 });
@@ -113,8 +113,8 @@ const AdminsHome = () => {
                 </div>
             </div>
 
-            {/* Withdrawal Requests Table */}
-            {/* <div className="bg-white shadow-lg rounded-lg p-6">
+           {/* // Withdrawal Requests Table  */}
+             <div className="bg-white shadow-lg rounded-lg p-6">
                 <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                     <MdPendingActions />
                     Pending Withdrawal Requests
@@ -144,21 +144,21 @@ const AdminsHome = () => {
                             <tbody>
                                 {withdrawRequests?.map((request) => (
                                     <tr key={request._id}>
-                                        <td>{request.userEmail}</td>
-                                        <td>${request.amount}</td>
+                                        <td>{request.worker_email}</td>
+                                        <td>${request.withdrawal_coin}</td>
                                         <td>{new Date(request.createdAt).toLocaleDateString()}</td>
-                                        <td>{request.paymentMethod}</td>
+                                        <td>{request.payment_system}</td>
                                         <td>
                                             <div className="max-w-xs overflow-hidden text-ellipsis">
-                                                {request.accountDetails}
+                                                {request.account_number}
                                             </div>
                                         </td>
                                         <td>
                                             <button
                                                 onClick={() => handleApproveWithdrawal(
                                                     request._id,
-                                                    request.userEmail,
-                                                    request.amount
+                                                    request.worker_email,
+                                                    request.withdrawal_coin
                                                 )}
                                                 className="btn btn-success btn-sm"
                                             >
@@ -171,7 +171,7 @@ const AdminsHome = () => {
                         </table>
                     </div>
                 )}
-            </div> */}
+            </div>
         </div>
     );
 };

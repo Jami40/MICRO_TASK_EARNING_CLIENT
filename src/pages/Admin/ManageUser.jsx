@@ -28,7 +28,7 @@ const ManageUsers = () => {
         try {
             const loadingToast = toast.loading('Updating role...');
             
-            await axios.patch(`/api/admin/users/role/${userId}`, {
+            await axios.patch(`https://micro-task-earning-server.vercel.app/admin/users/role/${userId}`, {
                 role: newRole
             });
 
@@ -64,7 +64,7 @@ const ManageUsers = () => {
             if (result.isConfirmed) {
                 const loadingToast = toast.loading('Deleting user...');
                 
-                await axios.delete(`/api/admin/users/${userId}`);
+                await axios.delete(`https://micro-task-earning-server.vercel.app/admin/users/${userId}`);
                 
                 toast.dismiss(loadingToast);
                 toast.success('User deleted successfully');

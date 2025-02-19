@@ -8,18 +8,35 @@ const SignUp = () => {
     const navigate = useNavigate();
     const { createUser, googleSignIn, manageProfile } = useContext(AuthContext);
     const [errorMessage, setErrorMessage] = useState([]);
+    const [imageFile, setImageFile] = useState(null);
     const getInitialCoins = (role) => {
         return role === 'worker' ? 10 : 50;
     };
 
-    const handleSubmit = e => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
         const name = e.target.name.value;
-        const photo = e.target.photo.value;
+        let photo = '';
+        // let photo = e.target.photo.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
         const role = e.target.role.value;
         const coins = getInitialCoins(role);
+
+
+        if (imageFile) {
+            const formData = new FormData();
+            formData.append('image', imageFile);
+
+            try {
+                const response = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGEBB_API_KEY}`, formData);
+                photo = response.data.data.url; 
+            } catch (error) {
+                toast.error("Image upload failed");
+                console.log("Image upload error:", error);
+                return;
+            }
+        }
 
         const UsersData = {
             name,
@@ -29,6 +46,8 @@ const SignUp = () => {
             coins   
         }
         setErrorMessage('');
+
+        
 
         const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
         if (!passwordPattern.test(password)) {
@@ -50,7 +69,7 @@ const SignUp = () => {
                 console.log(res.data);
                 localStorage.setItem('userCoins', coins.toString());
             })
-            navigate("/")
+            navigate("/dashboard")
         })
         .catch(err => {
             toast.error(err.message)
@@ -82,7 +101,7 @@ const SignUp = () => {
             .catch(error => {
                 console.error('Error saving user data:', error);
             });
-            navigate("/")
+            navigate("/dashboard")
         })
         .catch(error => {
             console.log(error)
@@ -112,12 +131,18 @@ const SignUp = () => {
                                 <option value="buyer">Buyer</option>
                             </select>
                         </div>
-                        <div className="form-control">
+                        {/* <div className="form-control">
                             <label className="label">
                                 <span className="label-text font-medium">Photo Url</span>
                             </label>
                             <input type="text" name="photo" placeholder="Enter your password" className="input input-bordered" required />
-                        </div>
+                        </div> */}
+                        <div className="form-control">
+                    <label className="label">
+                        <span className="label-text font-medium">Upload Photo</span>
+                    </label>
+                    <input type="file" name="photo" accept="image/*" onChange={e => setImageFile(e.target.files[0])} className="input input-bordered" required />
+                </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
